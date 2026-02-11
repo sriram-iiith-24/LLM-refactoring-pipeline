@@ -23,6 +23,13 @@ jobs:
         with:
           fetch-depth: 0  # Full history for better context
       
+      - name: Checkout target Java repository
+        uses: actions/checkout@v4
+        with:
+          repository: sriram-iiith-24/project-1-team-40-copy
+          path: code/repo-clone
+          token: ${{ secrets.GH_PAT }}
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -42,8 +49,11 @@ jobs:
           echo "GEMINI_KEY_1=$GEMINI_KEY_1" >> .env
           echo "GEMINI_KEY_2=$GEMINI_KEY_2" >> .env
           echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> .env
-          # Copy other config from .env.example if needed
-          grep -v "GEMINI_KEY\|GITHUB_TOKEN" .env.example >> .env || true
+          echo "GITHUB_REPO=sriram-iiith-24/project-1-team-40-copy" >> .env
+          echo "LOCAL_REPO_PATH=${{ github.workspace }}/code/repo-clone" >> .env
+          echo "SCAN_MODE=large" >> .env
+          echo "SCAN_MIN_LINES=300" >> .env
+          echo "MAX_FILES_PER_RUN=20" >> .env
       
       - name: Run refactoring pipeline
         id: refactor
