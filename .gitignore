@@ -1,0 +1,39 @@
+# Environment variables with secrets
+.env
+.env.backup
+
+# LARGE FOLDERS - DO NOT PUSH
+code/
+refactoring_reports/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# State files (these can be regenerated)
+pipeline_state.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+
