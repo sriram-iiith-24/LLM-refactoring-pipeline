@@ -73,8 +73,6 @@ class Config:
         missing = []
         if not any(cls.GEMINI_KEYS):
             missing.append('GEMINI_KEY_1 or GEMINI_KEY_2')
-        if not cls.DEEPSEEK_KEY:
-            missing.append('DEEPSEEK_KEY')
         if not cls.GITHUB_TOKEN:
             missing.append('GITHUB_TOKEN')
         if not cls.LOCAL_REPO_PATH:
