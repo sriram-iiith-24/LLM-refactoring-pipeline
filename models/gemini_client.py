@@ -152,59 +152,63 @@ class GeminiClient:
         """Detect design smells using Flash (faster)"""
         line_count = len(code.splitlines())
         
-        prompt = f"""You are a strict senior Java code reviewer specializing in detecting design smells.
+        prompt = f"""You are a strict senior software architect specializing in detecting DESIGN SMELLS (not code smells).
 
-Analyze this Java file ({line_count} lines) for the following design smells. Be THOROUGH and evaluate ALL smells:
+Analyze this Java file ({line_count} lines) for design smells across FOUR categories. Be THOROUGH:
 
-**1. God Class (Single Responsibility Violation)**
-   - Class has multiple unrelated responsibilities
-   - More than 5 distinct responsibilities (examine method groupings by purpose)
-   - Too many instance variables (>10)
-   - File size >400 lines often indicates this
-   
-**2. Feature Envy**
-   - A method that uses more methods/fields from another class than its own
-   - Method accessing external class data extensively
-   - Suggests method belongs in the other class
-   
-**3. Data Clumps**
-   - Same group of 3+ parameters appearing together across multiple methods
-   - Same fields repeatedly accessed together
-   - Suggests missing object abstraction
-   
-**4. Shotgun Surgery**
-   - Single logical change requires modifications across multiple methods or classes
-   - Related behavior scattered across the codebase
-   - Indicates poor cohesion
-   
-**5. Long Method**
-   - Methods over 30 lines (especially >50 lines)
-   - Complex logic that should be decomposed
-   - Multiple levels of nesting (>3)
+## 1. ABSTRACTION SMELLS
+**Missing Abstraction**: Primitive types where domain objects should exist, magic numbers/strings
+**Imperative Abstraction**: Names reflect "how" not "what" (ProcessData vs domain concepts)
+**Incomplete Abstraction**: Missing essential methods/properties
+**Multifaceted Abstraction**: Single class with too many responsibilities (God Class)
+**Unnecessary Abstraction**: Wrappers with no value
+**Unutilized Abstraction**: Defined but unused
+**Duplicate Abstraction**: Multiple classes representing same concept
 
-Examine the code carefully for EACH smell type. Return findings for ALL detected smells, not just one.
+## 2. ENCAPSULATION SMELLS
+**Deficient Encapsulation**: Public fields instead of private with getters/setters
+**Leaky Encapsulation**: Internal implementation exposed via public API
+**Missing Encapsulation**: Anemic models (only getters/setters, no logic)
+**Unexploited Encapsulation**: Access modifiers not used properly
 
-Return format:
+## 3. MODULARIZATION SMELLS
+**Broken Modularization**: Depends on other module internals
+**Insufficient Modularization**: Monolithic, should be split
+**Cyclically-dependent Modularization**: A depends on B depends on A
+**Hub-like Modularization**: Central hub everything depends on
+
+## 4. HIERARCHY SMELLS
+**Missing Hierarchy**: Code duplication that should use inheritance
+**Deep Hierarchy**: More than 4-5 levels
+**Unnecessary Hierarchy**: Inheritance where composition better
+**Rebellious Hierarchy**: Subclass violates parent contract (LSP)
+**Unfactored Hierarchy**: Common code not in parent
+**Broken Hierarchy**: is-a relationship violated
+**Wide Hierarchy**: Too many direct children (>10)
+**Multipath Hierarchy**: Diamond problem
+**Speculative Hierarchy**: Built for future needs
+**Cyclic Hierarchy**: Circular inheritance dependencies
+
+Return JSON:
 {{
   "has_smells": true,
   "smells": [
     {{
-      "type": "God Class",
+      "type": "Multifaceted Abstraction",
+      "category": "Abstraction",
       "severity": "high",
       "line_range": "1-{line_count}",
-      "evidence": "Describe specific evidence - method groupings, responsibilities",
-      "affected_methods": ["method1", "method2", "method3"]
+      "evidence": "Class handles user management, logging, and email notifications",
+      "affected_elements": ["UserManager", "sendEmail", "logActivity"]
     }}
-  ],
-  "related_files": []
+  ]
 }}
-
-If somehow there are truly no smells (unlikely for a {line_count}-line file):
-{{"has_smells": false, "smells": []}}
 
 File: {filename} ({line_count} lines)
 
 {code}
+"""
+
 """
         response = self.generate(prompt, model_type='flash', json_mode=True)
         

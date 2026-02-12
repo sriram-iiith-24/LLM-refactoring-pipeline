@@ -84,15 +84,40 @@ The detector employs a hybrid approach:
 1. **Static Heuristics**: Line count, method count, cyclomatic complexity indicators
 2. **LLM Reasoning**: Gemini Flash analyzes semantic relationships, naming patterns, responsibility violations
 
-**Detected Smell Types**:
+**Detected Design Smell Types**:
 
-- God Class / Brain Class
-- Long Method
-- Feature Envy
-- Data Clumps
-- Shotgun Surgery
-- Primitive Obsession
-- Refused Bequest
+**Abstraction Smells**:
+- Missing Abstraction
+- Imperative Abstraction
+- Incomplete Abstraction
+- Multifaceted Abstraction (God Class)
+- Unnecessary Abstraction
+- Unutilized Abstraction
+- Duplicate Abstraction
+
+**Encapsulation Smells**:
+- Deficient Encapsulation
+- Leaky Encapsulation
+- Missing Encapsulation
+- Unexploited Encapsulation
+
+**Modularization Smells**:
+- Broken Modularization
+- Insufficient Modularization
+- Cyclically-dependent Modularization
+- Hub-like Modularization
+
+**Hierarchy Smells**:
+- Missing Hierarchy
+- Deep Hierarchy
+- Unnecessary Hierarchy
+- Rebellious Hierarchy
+- Unfactored Hierarchy
+- Broken Hierarchy
+- Wide Hierarchy
+- Multipath Hierarchy
+- Speculative Hierarchy
+- Cyclic Hierarchy
 
 **Response Format**:
 
