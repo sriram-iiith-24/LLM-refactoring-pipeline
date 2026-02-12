@@ -206,10 +206,7 @@ Return JSON:
 
 File: {filename} ({line_count} lines)
 
-{code}
-"""
-
-"""
+{code}"""
         response = self.generate(prompt, model_type='flash', json_mode=True)
         
         # Extract JSON even if response includes extra text
