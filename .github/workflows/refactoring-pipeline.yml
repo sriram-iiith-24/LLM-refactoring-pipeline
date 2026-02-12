@@ -53,7 +53,7 @@ jobs:
           echo "LOCAL_REPO_PATH=${{ github.workspace }}/code/repo-clone" >> .env
           echo "SCAN_MODE=large" >> .env
           echo "SCAN_MIN_LINES=300" >> .env
-          echo "MAX_FILES_PER_RUN=20" >> .env
+          echo "MAX_FILES_PER_RUN=5" >> .env
       
       - name: Run refactoring pipeline
         id: refactor
